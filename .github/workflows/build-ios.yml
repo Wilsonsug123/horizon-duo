@@ -8,15 +8,16 @@ env:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Tools
+      - name: Setup Tools (Linux)
         run: |
-          brew install ldid
-          
+          sudo apt-get update
+          sudo apt-get install -y ldid zip unzip
+
       - name: Download Assets
         env:
           GITHUB_TOKEN: ${{ secrets.ASSETS_TOKEN }}
@@ -28,6 +29,7 @@ jobs:
 
       - name: Package IPA
         run: |
+          chmod +x ./packaging/ios/package.sh
           ./packaging/ios/package.sh device
 
       - name: Upload IPA to Private Repo
