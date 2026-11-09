@@ -8,16 +8,15 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Tools (Linux)
+      - name: Setup Tools (Mac)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ldid zip unzip
-
+          brew install ldid
+          
       - name: Download Assets
         env:
           GITHUB_TOKEN: ${{ secrets.ASSETS_TOKEN }}
